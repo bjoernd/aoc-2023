@@ -1,7 +1,7 @@
 Advent of Code 2023
 ===================
 
-My solutions for [Advent of Code 2022][aoc 2023], written in [Rust][rust].
+My solutions for [Advent of Code 2023][aoc 2023], written in [Rust][rust].
 
 This repository provides a good template for anyone interested in writing
 their solutions in Rust. Follow the instructions below to get started!
@@ -36,7 +36,7 @@ fn get_day_solution(day: usize, lines: impl Iterator<Item = String>) -> Box<dyn 
 }
 ```
 
-Now you're ready to go!. You'll want to log in to [Advent of Code][aoc 2022]
+Now you're ready to go!. You'll want to log in to [Advent of Code][aoc 2023]
 so that you can download inputs automatically.
 
 ### Logging In to Advent of Code
@@ -79,7 +79,7 @@ You should see something like the following:
 ```bash
 ❯ cargo run 1
     Finished dev [unoptimized + debuginfo] target(s) in 0.00s
-     Running `target/debug/aoc-2022 1`
+     Running `target/debug/aoc-2023 1`
 Solving day 1...
 Part 1: <solution> (0.000100000 seconds)
 Part 2: <solution> (0.000300000 seconds)
