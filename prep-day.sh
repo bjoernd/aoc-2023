@@ -44,10 +44,6 @@ if test -e "src/day$1.rs"; then
   echo "src/day$1.rs already exists, skipping..."
 else
   echo "Creating boilerplate module for day $1 at src/day$1.rs..."
-  echo "Remember to update main.rs:"
-  echo "  mod day$1;"
-  echo "  use day$1::Day$1;"
-  echo "  $1 => Box::new(Day$1::from_lines(lines)),"
 
   cat <<-EOF > "src/day$1.rs"
 use crate::{DaySolution, FromInput};
@@ -71,6 +67,15 @@ impl DaySolution for Day$1 {
     }
 }
 EOF
+
+sed -i "s|// MOD_MARKER|mod day$1;\nuse day$1::Day$1;\n// MOD_MARKER|" src/main.rs
+sed -i "s|// DAY_MARKER|        $1 => Box::new(Day$1::from_lines(lines)),\n// DAY_MARKER|" src/main.rs
+
+echo "Updated main.rs:"
+  git diff src/main.rs
+  #echo "  mod day$1;"
+  #echo "  use day$1::Day$1;"
+  #echo "  $1 => Box::new(Day$1::from_lines(lines)),"
 fi
 
 echo "Happy coding!"
