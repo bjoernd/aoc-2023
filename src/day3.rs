@@ -285,7 +285,6 @@ impl Day3 {
         println!("{:?}", neighbouring_numbers[2]);
         */
 
-        let mut neighbour_count = 0;
         let mut ncount = 0;
         let mut nprod = 1;
         for i in 0..3 {
