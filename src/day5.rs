@@ -1,5 +1,3 @@
-use std::borrow::BorrowMut;
-
 use crate::{DaySolution, FromInput};
 use itertools::Itertools;
 
