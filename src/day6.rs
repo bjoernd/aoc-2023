@@ -77,6 +77,7 @@ impl DaySolution for Day6 {
     }
 
     fn part_two(&self) -> String {
+        /* Yeah, no way I'm going to write code to parse those lines again if I can just hard-code things here... */
         let dist = 282107911471062_u64;
         let time = 47707566_u64;
         let mut wins = 0;
