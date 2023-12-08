@@ -69,7 +69,7 @@ impl DaySolution for Day$1 {
 EOF
 
 sed -i "s|// MOD_MARKER|mod day$1;\nuse day$1::Day$1;\n// MOD_MARKER|" src/main.rs
-sed -i "s|        // DAY_MARKER|        $1 => Box::new(Day$1::from_lines(lines)),\n// DAY_MARKER|" src/main.rs
+sed -i "s|        // DAY_MARKER|        $1 => Box::new(Day$1::from_lines(lines)),\n        // DAY_MARKER|" src/main.rs
 
 echo "Updated main.rs:"
   git diff src/main.rs
