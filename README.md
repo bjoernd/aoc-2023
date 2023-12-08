@@ -6,6 +6,8 @@ My solutions for [Advent of Code 2023][aoc 2023], written in [Rust][rust].
 This repository provides a good template for anyone interested in writing
 their solutions in Rust. Follow the instructions below to get started!
 
+(And I stole this template originally from [smores56](https://github.com/smores56/aoc-2022)).
+
 ## Setup
 
 ### Prerequisites
@@ -63,8 +65,8 @@ right away! Here's how to run it:
 sh prep-day.sh <day>
 ```
 
-Just remember to update `main.rs` with the suggestions printed by the
-`prep-day.sh` script to ensure that you can run your solutions.
+The script will also update `main.rs` with the boilerplate needed to
+actually run your solution.
 
 ## Running
 
