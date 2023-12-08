@@ -3,21 +3,23 @@ use crate::{DaySolution, FromInput};
 // TODO: Model the problem into this struct
 
 struct Fichas {
-    rojo : usize,
-    verde : usize,
-    azul : usize,
+    rojo: usize,
+    verde: usize,
+    azul: usize,
 }
 
 struct Juego {
-    id : usize,
-    fichas : Vec<Fichas>
+    id: usize,
+    fichas: Vec<Fichas>,
 }
 
 impl Juego {
     fn max_rojo(&self) -> usize {
         let mut max = 0;
         for f in &self.fichas {
-            if f.rojo > max { max = f.rojo; }
+            if f.rojo > max {
+                max = f.rojo;
+            }
         }
         max
     }
@@ -25,7 +27,9 @@ impl Juego {
     fn max_verde(&self) -> usize {
         let mut max = 0;
         for f in &self.fichas {
-            if f.verde > max { max = f.verde; }
+            if f.verde > max {
+                max = f.verde;
+            }
         }
         max
     }
@@ -33,27 +37,31 @@ impl Juego {
     fn max_azul(&self) -> usize {
         let mut max = 0;
         for f in &self.fichas {
-            if f.azul > max { max = f.azul; }
+            if f.azul > max {
+                max = f.azul;
+            }
         }
         max
     }
 }
 
 pub struct Day2 {
-    juegos : Vec<Juego>,
+    juegos: Vec<Juego>,
 }
 
 impl FromInput for Day2 {
     fn from_lines(lineas: impl Iterator<Item = String>) -> Self {
-        let mut d = Day2{ juegos : Vec::new() };
+        let mut d = Day2 { juegos: Vec::new() };
         for l in lineas {
-            let parte_id : Vec<&str> = l.split(":").collect();
-            let parte_num : Vec<&str> = parte_id[0].split(" ").collect();
+            let parte_id: Vec<&str> = l.split(":").collect();
+            let parte_num: Vec<&str> = parte_id[0].split(" ").collect();
             let num = parte_num[1].replace(":", "");
 
-            let mut j = Juego{ id: usize::from_str_radix(num.as_str(), 10).unwrap(),
-                                      fichas : Vec::new() };
-            
+            let mut j = Juego {
+                id: usize::from_str_radix(num.as_str(), 10).unwrap(),
+                fichas: Vec::new(),
+            };
+
             for jugada in parte_id[1].split(";").collect::<Vec<&str>>() {
                 let mut rojo = 0 as usize;
                 let mut verde = 0 as usize;
@@ -65,14 +73,20 @@ impl FromInput for Day2 {
                             count = usize::from_str_radix(v, 10).unwrap();
                         } else {
                             match v {
-                                "red" => { rojo = count; },
-                                "green" => { verde = count; },
-                                "blue" => { azul = count; },
-                                &_ => panic!("Unexpected value: {}", v)
+                                "red" => {
+                                    rojo = count;
+                                }
+                                "green" => {
+                                    verde = count;
+                                }
+                                "blue" => {
+                                    azul = count;
+                                }
+                                &_ => panic!("Unexpected value: {}", v),
                             }
                         }
                     }
-                    j.fichas.push(Fichas{rojo, verde, azul});
+                    j.fichas.push(Fichas { rojo, verde, azul });
                 }
                 println!("{}", jugada);
             }
@@ -86,10 +100,19 @@ impl FromInput for Day2 {
 fn valid_juego(j: &Juego, lim_rojo: usize, lim_verde: usize, lim_azul: usize) -> bool {
     let mut ok = true;
     for f in &j.fichas {
-        if f.rojo > lim_rojo { ok = false; break; }
-        if f.verde > lim_verde { ok = false; break; }
-        if f.azul > lim_azul { ok = false; break; }
-    }        
+        if f.rojo > lim_rojo {
+            ok = false;
+            break;
+        }
+        if f.verde > lim_verde {
+            ok = false;
+            break;
+        }
+        if f.azul > lim_azul {
+            ok = false;
+            break;
+        }
+    }
     ok
 }
 

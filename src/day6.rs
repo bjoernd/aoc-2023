@@ -1,12 +1,12 @@
 use crate::{DaySolution, FromInput};
 
 struct Race {
-    time : usize,
-    distance : usize,
+    time: usize,
+    distance: usize,
 }
 
 pub struct Day6 {
-    races : Vec<Race>,
+    races: Vec<Race>,
 }
 
 impl FromInput for Day6 {
@@ -19,23 +19,23 @@ impl FromInput for Day6 {
                 0 => {
                     for (j, num) in l.split_whitespace().enumerate() {
                         match j {
-                            0 => {},
+                            0 => {}
                             _ => {
                                 times.push(usize::from_str_radix(num, 10).unwrap());
                             }
                         }
                     }
-                },
+                }
                 1 => {
                     for (j, num) in l.split_whitespace().enumerate() {
                         match j {
-                            0 => {},
+                            0 => {}
                             _ => {
                                 distances.push(usize::from_str_radix(num, 10).unwrap());
                             }
                         }
                     }
-                },
+                }
                 _ => {}
             }
         }
@@ -43,13 +43,13 @@ impl FromInput for Day6 {
         let mut races = vec![];
 
         while !times.is_empty() {
-            races.push(
-                Race { time: times.pop().unwrap(),
-                       distance: distances.pop().unwrap()
-                });
+            races.push(Race {
+                time: times.pop().unwrap(),
+                distance: distances.pop().unwrap(),
+            });
         }
 
-        Day6{ races: races }
+        Day6 { races: races }
     }
 }
 
@@ -65,10 +65,11 @@ impl DaySolution for Day6 {
                 outcomes[speed] = runtime * speed;
             }
 
-            let wins : usize = outcomes.iter()
-                                .filter(|&&x| x > r.distance)
-                                .collect::<Vec<&usize>>()
-                                .len();
+            let wins: usize = outcomes
+                .iter()
+                .filter(|&&x| x > r.distance)
+                .collect::<Vec<&usize>>()
+                .len();
             prod *= wins;
         }
 

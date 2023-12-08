@@ -2,12 +2,12 @@ use crate::{DaySolution, FromInput};
 
 // TODO: Model the problem into this struct
 pub struct Day1 {
-    lineas : Vec<String>
+    lineas: Vec<String>,
 }
 
 impl FromInput for Day1 {
     fn from_lines(lineas: impl Iterator<Item = String>) -> Self {
-        let mut x = Day1 { lineas : Vec::new() };
+        let mut x = Day1 { lineas: Vec::new() };
         for l in lineas {
             x.lineas.push(l);
         }
@@ -23,7 +23,7 @@ impl DaySolution for Day1 {
             let mut carga = -1;
 
             //println!("{}", l);
-            for c in l.chars() {       
+            for c in l.chars() {
                 if c.is_numeric() {
                     if primera < 0 {
                         primera = c as i32 - '0' as i32;
@@ -43,7 +43,9 @@ impl DaySolution for Day1 {
         let mut suma = 0;
 
         let cifras = vec!['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
-        let numeros = vec!["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"];
+        let numeros = vec![
+            "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine",
+        ];
 
         for l in &self.lineas {
             let mut primera: i32 = -1;

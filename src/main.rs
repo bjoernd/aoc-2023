@@ -50,7 +50,7 @@ fn get_day_solution(day: usize, lines: impl Iterator<Item = String>) -> Box<dyn 
         4 => Box::new(Day4::from_lines(lines)),
         5 => Box::new(Day5::from_lines(lines)),
         6 => Box::new(Day6::from_lines(lines)),
-// DAY_MARKER
+        // DAY_MARKER
         _other => panic!("Day hasn't been solved yet"),
     }
 }
