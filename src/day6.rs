@@ -77,6 +77,15 @@ impl DaySolution for Day6 {
     }
 
     fn part_two(&self) -> String {
-        todo!("Solve part two of day 6 using your parsed input")
+        let dist = 282107911471062_u64;
+        let time = 47707566_u64;
+        let mut wins = 0;
+
+        for speed in 1..time {
+            let runtime = time - speed;
+            if speed * runtime > dist { wins += 1; }
+        }
+
+        wins.to_string()
     }
 }
