@@ -19,22 +19,22 @@ impl FromInput for Day4 {
                 winning: HashSet::new(),
                 drawn: HashSet::new(),
             };
-            for (idx, val) in l.split(":").enumerate() {
+            for (idx, val) in l.split(':').enumerate() {
                 // ignore the Card ID
                 if idx == 1 {
-                    for (idx2, val2) in val.split("|").enumerate() {
+                    for (idx2, val2) in val.split('|').enumerate() {
                         // 0 == winning
                         if idx2 == 0 {
                             for v in val2.split(' ') {
-                                if v == "" {
+                                if v.is_empty() {
                                     continue;
                                 }
                                 card.winning.insert(usize::from_str_radix(v, 10).unwrap());
                             }
                         } else {
                             // 1 == drawn
-                            for v in val2.split(" ") {
-                                if v == "" {
+                            for v in val2.split(' ') {
+                                if v.is_empty() {
                                     continue;
                                 }
                                 card.drawn.insert(usize::from_str_radix(v, 10).unwrap());
@@ -71,7 +71,7 @@ impl DaySolution for Day4 {
     fn part_two(&self) -> String {
         let mut counts = vec![1_usize; self.cards.len()];
 
-        for (i, c) in (&self.cards).into_iter().enumerate() {
+        for (i, c) in self.cards.iter().enumerate() {
             let intersection: HashSet<_> = c.winning.intersection(&c.drawn).collect();
             // no match -> no new cards
             if intersection.is_empty() {

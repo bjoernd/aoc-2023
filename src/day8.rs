@@ -22,11 +22,8 @@ impl FromInput for Day8 {
             if i == 0 {
                 directions = l.chars().collect::<Vec<_>>();
             } else {
-                if l == "" { continue; }
-                let raw = l.replace(",", "")
-                    .replace(")", "")
-                    .replace("(", "")
-                    .replace("=", "");
+                if l.is_empty() { continue; }
+                let raw = l.replace([',', ')', '(', '='], "");
                 
                 let mut source: String = String::new();
                 let mut dest_l: String = String::new();
@@ -101,8 +98,8 @@ impl DaySolution for Day8 {
 
         let mut least_common_multiple = total_steps.pop().unwrap();
 
-        while !total_steps.is_empty() {
-            let next = total_steps.pop().unwrap();
+        while let Some(next) = total_steps.pop() {
+            
             least_common_multiple = lcm(least_common_multiple, next);
         }
 

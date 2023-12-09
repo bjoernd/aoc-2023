@@ -35,7 +35,7 @@ impl Day3 {
 
     // parse number at given coordinates
     fn parse_number(&self, line: usize, column: usize) -> Result<usize, &str> {
-        let mut numero = 0 as usize;
+        let mut numero = 0_usize;
         let mut num_offset = column;
 
         while let Ok(num) = self.get(line, num_offset) {
@@ -56,7 +56,7 @@ impl Day3 {
 
     fn num_len(&self, i: usize) -> usize {
         if i >= 1000000 {
-            return 7;
+            7
         } else if i >= 100000 {
             return 6;
         } else if i >= 10000 {
@@ -99,24 +99,18 @@ impl Day3 {
             }
 
             let mut start_col = column;
-            if start_col > 0 {
-                start_col -= 1;
-            }
+            start_col = start_col.saturating_sub(1);
             let mut end_col = next_free;
             if next_free == self.lineas[line].cars.len() {
                 end_col -= 1;
             }
 
             for n in start_col..end_col + 1 {
-                if line > 0 {
-                    if self.lineas[line - 1].cars[n] != '.' {
-                        return true;
-                    }
+                if line > 0 && self.lineas[line - 1].cars[n] != '.' {
+                    return true;
                 }
-                if line < self.lineas.len() - 1 {
-                    if self.lineas[line + 1].cars[n] != '.' {
-                        return true;
-                    }
+                if line < self.lineas.len() - 1 && self.lineas[line + 1].cars[n] != '.' {
+                    return true;
                 }
             }
         }

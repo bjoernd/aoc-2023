@@ -53,22 +53,22 @@ impl FromInput for Day2 {
     fn from_lines(lineas: impl Iterator<Item = String>) -> Self {
         let mut d = Day2 { juegos: Vec::new() };
         for l in lineas {
-            let parte_id: Vec<&str> = l.split(":").collect();
-            let parte_num: Vec<&str> = parte_id[0].split(" ").collect();
-            let num = parte_num[1].replace(":", "");
+            let parte_id: Vec<&str> = l.split(':').collect();
+            let parte_num: Vec<&str> = parte_id[0].split(' ').collect();
+            let num = parte_num[1].replace(':', "");
 
             let mut j = Juego {
                 id: usize::from_str_radix(num.as_str(), 10).unwrap(),
                 fichas: Vec::new(),
             };
 
-            for jugada in parte_id[1].split(";").collect::<Vec<&str>>() {
-                let mut rojo = 0 as usize;
-                let mut verde = 0 as usize;
-                let mut azul = 0 as usize;
-                for color in jugada.split(",").collect::<Vec<&str>>() {
+            for jugada in parte_id[1].split(';').collect::<Vec<&str>>() {
+                let mut rojo = 0_usize;
+                let mut verde = 0_usize;
+                let mut azul = 0_usize;
+                for color in jugada.split(',').collect::<Vec<&str>>() {
                     let mut count = 0;
-                    for (i, v) in color.trim().split(" ").enumerate() {
+                    for (i, v) in color.trim().split(' ').enumerate() {
                         if i == 0 {
                             count = usize::from_str_radix(v, 10).unwrap();
                         } else {
@@ -118,12 +118,12 @@ fn valid_juego(j: &Juego, lim_rojo: usize, lim_verde: usize, lim_azul: usize) ->
 
 impl DaySolution for Day2 {
     fn part_one(&self) -> String {
-        let lim_rojo = 12 as usize;
-        let lim_verde = 13 as usize;
-        let lim_azul = 14 as usize;
+        let lim_rojo = 12_usize;
+        let lim_verde = 13_usize;
+        let lim_azul = 14_usize;
         let mut suma = 0;
         for juego in &self.juegos {
-            if valid_juego(&juego, lim_rojo, lim_verde, lim_azul) {
+            if valid_juego(juego, lim_rojo, lim_verde, lim_azul) {
                 suma += juego.id;
             }
         }

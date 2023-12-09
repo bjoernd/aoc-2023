@@ -20,8 +20,8 @@ enum HandType {
 
 fn card_val_generic(c: char, card_values: &str) -> usize {
     match card_values.find(c) {
-        Some(v) => {return v+1;}
-        None => { return 0; }
+        Some(v) => {v+1}
+        None => { 0}
     }
 }
 

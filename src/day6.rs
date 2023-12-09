@@ -49,7 +49,7 @@ impl FromInput for Day6 {
             });
         }
 
-        Day6 { races: races }
+        Day6 { races }
     }
 }
 

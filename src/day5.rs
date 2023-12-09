@@ -78,12 +78,12 @@ impl FromInput for Day5 {
         let mut next_map = &mut d.seed2soil;
 
         for l in lines {
-            if l == "" {
+            if l.is_empty() {
                 continue;
             }
 
             if l.starts_with("seeds:") {
-                for (i, v) in l.split(" ").enumerate() {
+                for (i, v) in l.split(' ').enumerate() {
                     // skip first column
                     if i > 0 {
                         d.seeds.push(usize::from_str_radix(v, 10).unwrap());
