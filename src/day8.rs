@@ -1,5 +1,5 @@
 use crate::{DaySolution, FromInput};
-use std::{collections::HashMap};
+use std::collections::HashMap;
 use num::integer::lcm;
 
 struct Target {
@@ -58,15 +58,6 @@ fn nodes_that_end_with_a(data: &Day8) -> Vec<String> {
     nodes
 }
 
-fn all_nodes_end_with_z(nodes: &Vec<String>) -> bool {
-    for n in nodes {
-        if n.chars().nth(2).unwrap() != 'Z' {
-            return false;
-        }
-    }
-    true
-}
-
 impl DaySolution for Day8 {
     fn part_one(&self) -> String {
         let mut current_node = String::from("AAA");
@@ -86,7 +77,7 @@ impl DaySolution for Day8 {
     }
 
     fn part_two(&self) -> String {
-        let mut current_nodes = nodes_that_end_with_a(self);
+        let current_nodes = nodes_that_end_with_a(self);
         let mut total_steps = vec![];
 
         //println!("Nodes to follow: {}", current_nodes.len());
