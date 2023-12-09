@@ -13,7 +13,7 @@ impl FromInput for Day9 {
         for l in lines {
             let mut values: Vec<i32> = vec![];
             for x in l.split_whitespace() {
-                values.push( i32::from_str_radix(x, 10).unwrap());
+                values.push( x.parse::<i32>().unwrap() );
             }
             numbers.push(values);
         }
@@ -48,23 +48,17 @@ fn print_matrix(matrix: &Vec<Vec<i32>>) {
     }
 }
 
-fn solve_one(numbers: &Vec<i32>) -> i32 {
-    /* Build a matrix to solve */
-
-    // need columns for all numbers PLUS the one we're solving for
-    let dim = numbers.len() + 1;
-
+/* Build a matrix to solve */
+fn build_matrix(dim: usize) -> Vec<Vec<i32>> {
     // init with 0
     let mut matrix = vec![];
     for _ in 0..dim {
         matrix.push(vec![0; dim]);
     }
+    matrix
+}
 
-    // fill in first line
-    for (i, n) in numbers.iter().enumerate() {
-        matrix[0][i] = *n;
-    }
-
+fn fill_forward(matrix: &mut [Vec<i32>], dim: usize) -> usize {
     let mut idx = 1_usize;
 
     loop {
@@ -75,6 +69,22 @@ fn solve_one(numbers: &Vec<i32>) -> i32 {
         if zero_line { break; }
         idx += 1;
     }
+
+    idx
+}
+
+fn solve_one(numbers: &Vec<i32>) -> i32 {
+    // need columns for all numbers PLUS the one we're solving for
+    let dim = numbers.len() + 1;
+
+    let mut matrix = build_matrix(dim);
+    
+    // fill in first line
+    for (i, n) in numbers.iter().enumerate() {
+        matrix[0][i] = *n;
+    }
+
+    let idx = fill_forward(& mut matrix, dim);
 
     //print_matrix(&matrix);
 
@@ -88,32 +98,17 @@ fn solve_one(numbers: &Vec<i32>) -> i32 {
 }
 
 fn solve_two(numbers: &Vec<i32>) -> i32 {
-    /* Build a matrix to solve */
-
     // need columns for all numbers PLUS the one we're solving for
     let dim = numbers.len() + 1;
 
-    // init with 0
-    let mut matrix = vec![];
-    for _ in 0..dim {
-        matrix.push(vec![0; dim]);
-    }
+    let mut matrix = build_matrix(dim);
 
     // fill in first line
     for (i, n) in numbers.iter().enumerate() {
         matrix[0][i+1] = *n;
     }
 
-    let mut idx = 1_usize;
-
-    loop {
-        for i in idx..dim-1 {
-            matrix[idx][i+1] = matrix[idx-1][i+1] - matrix[idx-1][i];
-        }
-        let zero_line = ! matrix[idx].iter().map(|x| *x == 0).contains(&false);
-        if zero_line { break; }
-        idx += 1;
-    }
+    let idx = fill_forward(& mut matrix, dim);
 
     //print_matrix(&matrix);
 
@@ -139,7 +134,7 @@ impl DaySolution for Day9 {
     fn part_two(&self) -> String {
         let mut sum = 0;
         for numbers in &self.numbers {
-            sum += solve_two(&numbers);
+            sum += solve_two(numbers);
             //println!("----------------------------------------------------------------------------");
         }
         sum.to_string()
