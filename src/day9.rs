@@ -4,7 +4,7 @@ use crate::{DaySolution, FromInput};
 
 // TODO: Model the problem into this struct
 pub struct Day9 {
-    numbers : Vec<Vec<i32>>
+    numbers: Vec<Vec<i32>>,
 }
 
 impl FromInput for Day9 {
@@ -13,24 +13,21 @@ impl FromInput for Day9 {
         for l in lines {
             let mut values: Vec<i32> = vec![];
             for x in l.split_whitespace() {
-                values.push( x.parse::<i32>().unwrap() );
+                values.push(x.parse::<i32>().unwrap());
             }
             numbers.push(values);
         }
-        Day9{ numbers }
+        Day9 { numbers }
     }
 }
 
 #[allow(dead_code)]
 fn print_matrix(matrix: &Vec<Vec<i32>>) {
     let max = matrix
-                        .iter()
-                        .map( |vector| vector
-                                                    .iter()
-                                                    .max()
-                                                    .unwrap() )
-                        .max()
-                        .unwrap();
+        .iter()
+        .map(|vector| vector.iter().max().unwrap())
+        .max()
+        .unwrap();
 
     let max_len = max.to_string().len();
 
@@ -62,11 +59,13 @@ fn fill_forward(matrix: &mut [Vec<i32>], dim: usize) -> usize {
     let mut idx = 1_usize;
 
     loop {
-        for i in idx..dim-1 {
-            matrix[idx][i] = matrix[idx-1][i] - matrix[idx-1][i-1];
+        for i in idx..dim - 1 {
+            matrix[idx][i] = matrix[idx - 1][i] - matrix[idx - 1][i - 1];
         }
-        let zero_line = ! matrix[idx].iter().map(|x| *x == 0).contains(&false);
-        if zero_line { break; }
+        let zero_line = !matrix[idx].iter().map(|x| *x == 0).contains(&false);
+        if zero_line {
+            break;
+        }
         idx += 1;
     }
 
@@ -78,23 +77,23 @@ fn solve_one(numbers: &Vec<i32>) -> i32 {
     let dim = numbers.len() + 1;
 
     let mut matrix = build_matrix(dim);
-    
+
     // fill in first line
     for (i, n) in numbers.iter().enumerate() {
         matrix[0][i] = *n;
     }
 
-    let idx = fill_forward(& mut matrix, dim);
+    let idx = fill_forward(&mut matrix, dim);
 
     //print_matrix(&matrix);
 
     for i in (0..idx).rev() {
-        matrix[i][dim-1] = matrix[i+1][dim-1] + matrix[i][dim-2];
+        matrix[i][dim - 1] = matrix[i + 1][dim - 1] + matrix[i][dim - 2];
     }
 
     //print_matrix(&matrix);
 
-    matrix[0][dim-1]
+    matrix[0][dim - 1]
 }
 
 fn solve_two(numbers: &Vec<i32>) -> i32 {
@@ -105,15 +104,15 @@ fn solve_two(numbers: &Vec<i32>) -> i32 {
 
     // fill in first line
     for (i, n) in numbers.iter().enumerate() {
-        matrix[0][i+1] = *n;
+        matrix[0][i + 1] = *n;
     }
 
-    let idx = fill_forward(& mut matrix, dim);
+    let idx = fill_forward(&mut matrix, dim);
 
     //print_matrix(&matrix);
 
     for i in (0..idx).rev() {
-        matrix[i][i] = matrix[i][i+1] - matrix[i+1][i+1];
+        matrix[i][i] = matrix[i][i + 1] - matrix[i + 1][i + 1];
     }
 
     //print_matrix(&matrix);

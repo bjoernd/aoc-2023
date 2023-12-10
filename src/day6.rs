@@ -84,7 +84,9 @@ impl DaySolution for Day6 {
 
         for speed in 1..time {
             let runtime = time - speed;
-            if speed * runtime > dist { wins += 1; }
+            if speed * runtime > dist {
+                wins += 1;
+            }
         }
 
         wins.to_string()

@@ -72,16 +72,18 @@ impl DaySolution for Day1 {
                 // println!("  {}", numeros[n]);
                 if let Some(pos) = l.find(numeros[n]) {
                     // println!("      pos {} prev {}", pos, posiciones_primeros[n]);
-                    if (posiciones_primeros[n] >= 0 && posiciones_primeros[n] > pos as i32) ||
-                        posiciones_primeros[n] == -1 {
+                    if (posiciones_primeros[n] >= 0 && posiciones_primeros[n] > pos as i32)
+                        || posiciones_primeros[n] == -1
+                    {
                         // println!("    1st {}", pos);
                         posiciones_primeros[n] = pos as i32;
                     }
                 }
                 if let Some(pos) = l.rfind(numeros[n]) {
                     // println!("      pos {} prev {}", pos, posiciones_cargos[n]);
-                    if (posiciones_cargos[n] >= 0 && posiciones_cargos[n] < pos as i32) ||
-                        posiciones_cargos[n] == -1 {
+                    if (posiciones_cargos[n] >= 0 && posiciones_cargos[n] < pos as i32)
+                        || posiciones_cargos[n] == -1
+                    {
                         // println!("    last {}", pos);
                         posiciones_cargos[n] = pos as i32;
                     }
@@ -94,14 +96,16 @@ impl DaySolution for Day1 {
             let mut pos_prim = -1;
             let mut pos_carg = -1;
             for n in 1..10 {
-                if (primera == -1 && posiciones_primeros[n] >= 0) ||
-                   (posiciones_primeros[n] >= 0 && posiciones_primeros[n] < pos_prim) {
+                if (primera == -1 && posiciones_primeros[n] >= 0)
+                    || (posiciones_primeros[n] >= 0 && posiciones_primeros[n] < pos_prim)
+                {
                     primera = n as i32;
                     pos_prim = posiciones_primeros[n];
                 }
 
-                if (primera == -1 && posiciones_cargos[n] >= 0) ||
-                    (posiciones_cargos[n] >= 0 && posiciones_cargos[n] >= pos_carg) {
+                if (primera == -1 && posiciones_cargos[n] >= 0)
+                    || (posiciones_cargos[n] >= 0 && posiciones_cargos[n] >= pos_carg)
+                {
                     carga = n as i32;
                     pos_carg = posiciones_cargos[n];
                 }
