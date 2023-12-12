@@ -299,9 +299,7 @@ impl DaySolution for Day10 {
             visited_positions.push((l2, c2));
 
             match find_connecting(&self.map, l1, c1)
-                .iter()
-                .filter(|x| !visited_positions.contains(*x))
-                .next()
+                .iter().find(|x| !visited_positions.contains(*x))
             {
                 Some(x) => positions.push(*x),
                 None => {
@@ -309,9 +307,7 @@ impl DaySolution for Day10 {
                 }
             };
             match find_connecting(&self.map, l2, c2)
-                .iter()
-                .filter(|x| !visited_positions.contains(*x))
-                .next()
+                .iter().find(|x| !visited_positions.contains(*x))
             {
                 Some(x) => positions.push(*x),
                 None => {
@@ -345,9 +341,7 @@ impl DaySolution for Day10 {
             visited_positions.push((l2, c2));
 
             match find_connecting(&self.map, l1, c1)
-                .iter()
-                .filter(|x| !visited_positions.contains(*x))
-                .next()
+                .iter().find(|x| !visited_positions.contains(*x))
             {
                 Some(x) => positions.push(*x),
                 None => {
@@ -355,9 +349,7 @@ impl DaySolution for Day10 {
                 }
             };
             match find_connecting(&self.map, l2, c2)
-                .iter()
-                .filter(|x| !visited_positions.contains(*x))
-                .next()
+                .iter().find(|x| !visited_positions.contains(*x))
             {
                 Some(x) => positions.push(*x),
                 None => {

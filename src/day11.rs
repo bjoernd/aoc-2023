@@ -18,7 +18,6 @@ impl FromInput for Day11 {
             // line full of dots? -> duplicate
             if l.chars().filter(|x| *x == '.').count() == l.len() {
                 extra_lines.push(idx);
-                
             }
         }
 
@@ -29,14 +28,23 @@ impl FromInput for Day11 {
             }
         }
 
-        Day11 { map: map, special_cols: extra_cols, special_lines: extra_lines }
+        Day11 {
+            map,
+            special_cols: extra_cols,
+            special_lines: extra_lines,
+        }
     }
 }
 
 impl Day11 {
-    fn special_manhattan_dist(&self, p1: &(usize, usize), p2: &(usize, usize), add_extra: usize ) -> usize {
-        let dx = (p1.0 as i32 - p2.0 as i32).abs() as usize;
-        let dy = (p1.1 as i32 - p2.1 as i32).abs() as usize;
+    fn special_manhattan_dist(
+        &self,
+        p1: &(usize, usize),
+        p2: &(usize, usize),
+        add_extra: usize,
+    ) -> usize {
+        let dx = (p1.0 as i32 - p2.0 as i32).unsigned_abs() as usize;
+        let dy = (p1.1 as i32 - p2.1 as i32).unsigned_abs() as usize;
 
         let lmax = p1.0.max(p2.0);
         let lmin = p1.0.min(p2.0);
@@ -76,7 +84,7 @@ impl DaySolution for Day11 {
         }
 
         for (idx, p1) in points.iter().enumerate() {
-            for p2 in points[idx+1..].iter() {
+            for p2 in points[idx + 1..].iter() {
                 sum += self.special_manhattan_dist(p1, p2, 1);
             }
         }
@@ -98,7 +106,7 @@ impl DaySolution for Day11 {
         }
 
         for (idx, p1) in points.iter().enumerate() {
-            for p2 in points[idx+1..].iter() {
+            for p2 in points[idx + 1..].iter() {
                 sum += self.special_manhattan_dist(p1, p2, 999999);
             }
         }
