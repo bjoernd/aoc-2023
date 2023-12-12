@@ -217,13 +217,13 @@ fn access(map: &Vec<Vec<char>>, line: i32, col: i32) -> char {
     map[line as usize][col as usize]
 }
 
-fn turn_o(mut map: &mut Vec<Vec<char>>, line: i32, col: i32) {
+fn turn_o(map: &mut Vec<Vec<char>>, line: i32, col: i32) {
     if access(map, line, col) == '.' {
         map[line as usize][col as usize] = 'O';
     }
 }
 
-fn turn_i(mut map: &mut Vec<Vec<char>>, line: i32, col: i32) {
+fn turn_i(map: &mut Vec<Vec<char>>, line: i32, col: i32) {
     if access(map, line, col) == '.' {
         map[line as usize][col as usize] = 'I';
     }
