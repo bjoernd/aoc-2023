@@ -3,51 +3,67 @@ use crate::{DaySolution, FromInput};
 // TODO: Model the problem into this struct
 pub struct Day11 {
     map: Vec<Vec<char>>,
+    special_cols: Vec<usize>,
+    special_lines: Vec<usize>,
 }
 
 impl FromInput for Day11 {
     fn from_lines(lines: impl Iterator<Item = String>) -> Self {
         let mut map: Vec<Vec<char>> = vec![];
+        let mut extra_lines = vec![];
+        let mut extra_cols = vec![];
 
-        for l in lines {
+        for (idx, l) in lines.enumerate() {
             map.push(l.chars().collect());
             // line full of dots? -> duplicate
             if l.chars().filter(|x| *x == '.').count() == l.len() {
-                map.push(l.chars().collect());
+                extra_lines.push(idx);
+                
             }
         }
 
-        // now expand columns with only dots. Find the columns first and only then expand
-        // in order to avoid counting too many
-        let mut dot_columns = vec![];
         for c in 0..map[0].len() {
             let column = map.iter().map(|x| x[c]).collect::<Vec<char>>();
             if column.iter().filter(|x| **x == '.').count() == column.len() {
-                dot_columns.push(c)
+                extra_cols.push(c)
             }
         }
 
-        for (i, c) in dot_columns.iter().enumerate() {
-            for line in &mut map {
-                line.insert(*c + i, '.');
-            }
-        }
-
-        Day11 { map }
+        Day11 { map: map, special_cols: extra_cols, special_lines: extra_lines }
     }
 }
 
-fn manhattan_dist( p1: &(usize, usize), p2: &(usize, usize) ) -> usize {
-    let dx = (p1.0 as i32 - p2.0 as i32).abs() as usize;
-    let dy = (p1.1 as i32 - p2.1 as i32).abs() as usize;
-    dx + dy
+impl Day11 {
+    fn special_manhattan_dist(&self, p1: &(usize, usize), p2: &(usize, usize), add_extra: usize ) -> usize {
+        let dx = (p1.0 as i32 - p2.0 as i32).abs() as usize;
+        let dy = (p1.1 as i32 - p2.1 as i32).abs() as usize;
+
+        let lmax = p1.0.max(p2.0);
+        let lmin = p1.0.min(p2.0);
+
+        let cmax = p1.1.max(p2.1);
+        let cmin = p1.1.min(p2.1);
+
+        let mut extra_space = 0;
+        for col in &self.special_cols {
+            if cmin < *col && *col < cmax {
+                extra_space += add_extra;
+            }
+        }
+
+        for line in &self.special_lines {
+            if lmin < *line && *line < lmax {
+                extra_space += add_extra;
+            }
+        }
+
+        dx + dy + extra_space
+    }
 }
 
 impl DaySolution for Day11 {
     fn part_one(&self) -> String {
         let mut sum = 0;
-
-        println!("{}x{}", self.map.len(), self.map[0].len());
 
         // collect points
         let mut points = vec![];
@@ -61,7 +77,7 @@ impl DaySolution for Day11 {
 
         for (idx, p1) in points.iter().enumerate() {
             for p2 in points[idx+1..].iter() {
-                sum += manhattan_dist(p1, p2);
+                sum += self.special_manhattan_dist(p1, p2, 1);
             }
         }
 
@@ -69,6 +85,24 @@ impl DaySolution for Day11 {
     }
 
     fn part_two(&self) -> String {
-        todo!("Solve part two of day 11 using your parsed input")
+        let mut sum = 0;
+
+        // collect points
+        let mut points = vec![];
+        for l in 0..self.map.len() {
+            for c in 0..self.map[0].len() {
+                if self.map[l][c] == '#' {
+                    points.push((l, c));
+                }
+            }
+        }
+
+        for (idx, p1) in points.iter().enumerate() {
+            for p2 in points[idx+1..].iter() {
+                sum += self.special_manhattan_dist(p1, p2, 999999);
+            }
+        }
+
+        sum.to_string()
     }
 }
