@@ -36,7 +36,7 @@ impl FromInput for Day12 {
                         items = item.chars().collect();
                     },
                     1 => {
-                        numbers = item.split(",").map(|x| usize::from_str_radix(x, 10).unwrap()).collect();
+                        numbers = item.split(',').map(|x| str::parse(x).unwrap()).collect();
                     },
                     _ => panic!("Too many items to unpack.")
                 }
@@ -53,11 +53,11 @@ impl FromInput for Day12 {
 
 fn is_valid(items: &[char], numbers: &[usize]) -> bool {
     let s: String = items.iter().collect();
-    let counts: Vec<usize> = s.replace(".", " ").split_whitespace().map(|x| x.len()).collect();
+    let counts: Vec<usize> = s.replace('.', " ").split_whitespace().map(|x| x.len()).collect();
 
     //println!("{:?} == {:?} {}", counts, numbers, &counts==numbers);
 
-    &counts == numbers
+    counts == numbers
 }
 
 fn solve_one(items: &[char], numeric: &[usize]) -> usize {
