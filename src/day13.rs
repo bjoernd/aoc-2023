@@ -1,5 +1,3 @@
-
-
 use crate::{DaySolution, FromInput};
 
 struct Map {
