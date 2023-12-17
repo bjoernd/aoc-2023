@@ -1,12 +1,12 @@
 use crate::{DaySolution, FromInput};
 use cached::proc_macro::cached;
-use itertools::{Itertools, PeekingNext};
+use itertools::Itertools;
 
 // TODO: Model the problem into this struct
 
 struct GroupDescription {
     items: Vec<char>,
-    numeric : Vec<usize>,
+    numeric: Vec<usize>,
 }
 
 pub struct Day12 {
@@ -18,14 +18,14 @@ impl FromInput for Day12 {
         let mut groups = vec![];
 
         for l in &_lines.collect_vec()
-            // [
-            //     "???.### 1,1,3",
-            //     ".??..??...?##. 1,1,3",
-            //     "?#?#?#?#?#?#?#? 1,3,1,6",
-            //     "????.#...#... 4,1,1",
-            //     "????.######..#####. 1,6,5",
-            //     "?###???????? 3,2,1"
-            // ]
+        // [
+        //     "???.### 1,1,3",
+        //     ".??..??...?##. 1,1,3",
+        //     "?#?#?#?#?#?#?#? 1,3,1,6",
+        //     "????.#...#... 4,1,1",
+        //     "????.######..#####. 1,6,5",
+        //     "?###???????? 3,2,1"
+        // ]
         {
             let mut items = vec![];
             let mut numbers = vec![];
@@ -42,11 +42,11 @@ impl FromInput for Day12 {
                             }
                             lastc = ch;
                         }
-                    },
+                    }
                     1 => {
                         numbers = item.split(',').map(|x| str::parse(x).unwrap()).collect();
-                    },
-                    _ => panic!("Too many items to unpack.")
+                    }
+                    _ => panic!("Too many items to unpack."),
                 }
             }
             groups.push(GroupDescription {
@@ -59,29 +59,34 @@ impl FromInput for Day12 {
     }
 }
 
-fn compute_schema(items: &Vec<char>) -> Vec<usize>
-{
-    items.into_iter().collect::<String>().replace(".", " ").split_whitespace().map(|x| x.len()).collect::<Vec<usize>>()
+fn compute_schema(items: &Vec<char>) -> Vec<usize> {
+    items
+        .iter()
+        .collect::<String>()
+        .replace('.', " ")
+        .split_whitespace()
+        .map(|x| x.len())
+        .collect::<Vec<usize>>()
 }
 
 fn validate(items: &Vec<char>, schema: &Vec<usize>) -> bool {
-    if items.contains(&'?') { return false; }
+    if items.contains(&'?') {
+        return false;
+    }
     compute_schema(items) == *schema
 }
-
 
 #[cached]
 fn solve_one(items: Vec<char>, schema: Vec<usize>, depth: usize) -> usize {
     // for i in 0..depth*3 { print!(" "); }
     // println!("==== {:?} {:?}", items, schema);
-    
+
     if !items.contains(&'?') {
         if validate(&items, &schema) {
             // for i in 0..depth*3 { print!(" "); }
             // println!("{:?} {:?} 1", items, schema);
             return 1;
-        }
-        else {
+        } else {
             // for i in 0..depth*3 { print!(" "); }
             // println!("{:?} {:?} 1", items, schema);
             return 0;
@@ -89,19 +94,23 @@ fn solve_one(items: Vec<char>, schema: Vec<usize>, depth: usize) -> usize {
     }
 
     /* Empty schema - we must not have any hashes left */
-    if schema.len() == 0 {
-        if items.contains(&'#') { return 0; }
+    if schema.is_empty() {
+        if items.contains(&'#') {
+            return 0;
+        }
         return 1;
     }
 
-    if items.len() == 0 { return 0; }
+    if items.is_empty() {
+        return 0;
+    }
 
-    let mut idx  = 0_usize;
+    let mut idx = 0_usize;
 
     match items[idx] {
         '.' => {
-            return solve_one(items[1..].to_vec(), schema, depth+1);
-        },
+            return solve_one(items[1..].to_vec(), schema, depth + 1);
+        }
         '#' => {
             let mut needed_hashes = schema[0];
 
@@ -119,24 +128,33 @@ fn solve_one(items: Vec<char>, schema: Vec<usize>, depth: usize) -> usize {
             // for i in 0..depth*3 { print!(" "); }
             // println!("idx {} needed_hashes {} len {}", idx, needed_hashes, items.len());
 
-            if needed_hashes > 0 { return 0; }
+            if needed_hashes > 0 {
+                return 0;
+            }
 
             if idx == items.len() {
-                if schema.len() == 1 { return 1; } // we matched the last group
+                if schema.len() == 1 {
+                    return 1;
+                } // we matched the last group
                 return 0;
             }
 
             // We found a group! Now if the next char is still a hash, we mismatched. If it's a . or a ?, treat it as a .
-            if items[idx] == '#' { return 0; }
+            if items[idx] == '#' {
+                return 0;
+            }
 
             let new_schema = schema[1..].to_vec();
-            return solve_one(items[idx+1..].to_vec(), new_schema, depth+1);
-        },
+            return solve_one(items[idx + 1..].to_vec(), new_schema, depth + 1);
+        }
         '?' => {
             let new_items = [vec!['#'], items[1..].to_vec()].concat();
-            return solve_one(new_items, schema.clone(), depth+1) + solve_one(items[1..].to_vec(), schema, depth+1);
+            return solve_one(new_items, schema.clone(), depth + 1)
+                + solve_one(items[1..].to_vec(), schema, depth + 1);
         }
-        _ => { panic!("Invalid item"); }
+        _ => {
+            panic!("Invalid item");
+        }
     }
 }
 
@@ -175,7 +193,7 @@ impl DaySolution for Day12 {
             // println!("{:?} {:?} {}", g.items, g.numeric, res);
             sum += res;
             if _i % 50 == 49 {
-                println!("{}/{}", _i+1, self.groups.len());
+                println!("{}/{}", _i + 1, self.groups.len());
             }
         }
         sum.to_string()
