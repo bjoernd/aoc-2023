@@ -52,18 +52,24 @@ use crate::{DaySolution, FromInput};
 pub struct Day$1;
 
 impl FromInput for Day$1 {
-    fn from_lines(lines: impl Iterator<Item = String>) -> Self {
-        todo!("Parse your input from the input file")
+    fn from_lines(_lines: impl Iterator<Item = String>) -> Self {
+        todo!("Parse your input from the input file");
+        for l in _lines {
+        }
     }
 }
 
 impl DaySolution for Day$1 {
     fn part_one(&self) -> String {
-        todo!("Solve part one of day $1 using your parsed input")
+        let mut sum = 0_usize;
+        todo!("Solve part one of day $1 using your parsed input");
+        sum.to_string()
     }
 
     fn part_two(&self) -> String {
-        todo!("Solve part two of day $1 using your parsed input")
+        let mut sum = 0_usize;
+        todo!("Solve part two of day $1 using your parsed input");
+        sum.to_string()
     }
 }
 EOF
